@@ -3,7 +3,7 @@ import numpy as np
 
 LENGTH_m = 2.58
 DIAMETER_m = 0.38 * (10**-3)
-GFS = 9.81
+grav_field_str = 9.81
 
 mass_kg = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 extension_mm = [0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 4.2, 4.5, 4.9, 5.0]
@@ -26,7 +26,7 @@ for i in strain_perc:
 stress = []
 for i in mass_kg:
     # stress equals force applied over surface area
-    stress.append((i * GFS) / (np.pi * ((DIAMETER_m / 2) ** 2)))
+    stress.append((i * grav_field_str) / (np.pi * ((DIAMETER_m / 2) ** 2)))
 
 # Young's modulus
 
