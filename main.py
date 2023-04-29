@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy import stats
 
 LENGTH_m = 2.58
 DIAMETER_m = 0.38 * (10**-3)
@@ -41,13 +42,20 @@ print(f"Young's modulus is equal to {young_mod}.")
 print(f"Strain values are {strain_perc}.")
 print(f"Stress values are {stress}.")
 
-
 # stress-strain graph
-plt.plot(strain, stress)
+slope, intercept, r, p, std_err = stats.linregress(strain, stress)
+
+
+def myfunc(strain):
+    return slope * strain + intercept
+
+
+mymodel = list(map(myfunc, strain))
+
+plt.scatter(strain, stress)
+plt.plot(strain, mymodel)
 plt.show()
 
-
-# uncertainties
 
 # natural length uncertainty, half of a millimetre
 length_unc_m = 0.0005
@@ -63,5 +71,6 @@ ext_unc_m = 0.0005
 
 print(f"The uncertainty is {young_mod} plus / minus {(length_unc_m + area_unc_m2 + ext_unc_m)}.")
 print(f"The percentage uncertainty is \
-{((length_unc_m / LENGTH_m) + (area_unc_m2 / DIAMETER_m) + (ext_unc_m / avg_ext_m)) * 100}.")
+{((length_unc_m / LENGTH_m) + (area_unc_m2 / DIAMETER_m) + (ext_unc_m / avg_ext_m)) * 100}%.")
+
 
